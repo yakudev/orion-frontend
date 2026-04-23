@@ -4,25 +4,38 @@ defineProps<{ message: Message }>()
 </script>
 
 <template>
-  <div :class="['bubble', `bubble--${message.role}`]">
-    <span class="bubble__label">{{ message.role === 'user' ? 'Tú' : 'Orion' }}</span>
-    <p class="bubble__content">{{ message.content }}</p>
+  <div :class="['msg', `msg--${message.role}`]">
+    <div v-if="message.role === 'assistant'" class="msg__avatar">🌌</div>
+    <div v-else class="msg__avatar msg__avatar--user">Y</div>
+    <div class="msg__body">
+      <div class="msg__bubble">{{ message.content }}</div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.bubble { display: flex; flex-direction: column; gap: 0.25rem; max-width: 80%; }
-.bubble--user { align-self: flex-end; align-items: flex-end; }
-.bubble--assistant { align-self: flex-start; align-items: flex-start; }
-.bubble__label { font-size: 0.7rem; color: #555; text-transform: uppercase; letter-spacing: 0.05em; }
-.bubble__content {
-  margin: 0;
-  padding: 0.65rem 1rem;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  white-space: pre-wrap;
+.msg { display: flex; gap: 0.65rem; max-width: 88%; }
+.msg--user { flex-direction: row-reverse; align-self: flex-end; }
+.msg--assistant { align-self: flex-start; }
+.msg__avatar {
+  width: 26px; height: 26px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+  margin-top: 2px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  box-shadow: 0 0 10px rgba(124,111,255,0.25);
 }
-.bubble--user .bubble__content { background: #1a1a2e; color: #e0e0ff; border-bottom-right-radius: 4px; }
-.bubble--assistant .bubble__content { background: #1a1a1a; color: #e0e0e0; border-bottom-left-radius: 4px; }
+.msg__avatar--user { background: var(--surface2); color: var(--text2); box-shadow: none; font-size: 11px; font-family: var(--mono); }
+.msg__bubble {
+  padding: 0.65rem 1rem; border-radius: 11px;
+  font-size: 0.875rem; line-height: 1.6; white-space: pre-wrap;
+}
+.msg--assistant .msg__bubble {
+  background: var(--surface); border: 1px solid var(--border);
+  border-bottom-left-radius: 3px; color: var(--text);
+}
+.msg--user .msg__bubble {
+  background: linear-gradient(135deg, rgba(124,111,255,0.18), rgba(79,195,247,0.12));
+  border: 1px solid rgba(124,111,255,0.22);
+  border-bottom-right-radius: 3px; color: var(--text);
+}
 </style>
