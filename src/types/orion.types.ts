@@ -25,3 +25,10 @@ export interface ChatHistoryResponse {
   messages: Message[]
   count: number
 }
+
+export interface WeeklyFinanceSummary {
+  totalExpenses: number
+  totalIncome: number
+  byCategory: Record<string, number>
+  currency: string
+}
